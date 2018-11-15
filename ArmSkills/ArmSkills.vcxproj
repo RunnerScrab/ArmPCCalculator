@@ -159,7 +159,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ArmSkills.cpp" />
     <ClCompile Include="CCharSheetDlg.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CArmSkillApp.cpp" />
