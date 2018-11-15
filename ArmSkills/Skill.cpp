@@ -26,9 +26,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 const char * Skill::SkillTypeToStr(Skill::SkillType type)
 {
-	static const char* skillnametable[9] = { "Psionic", "Combat", "Weapon",
+	static const char* skillnametable[9] = { "Psionic", "Combat", "Weapon", "Stealth",
 		"Manipulation", "Perception", "Barter", "Language",
-		"Craft", "Stealth" };
+		"Craft" };
 	return skillnametable[static_cast<int>(type)];
 }
 
