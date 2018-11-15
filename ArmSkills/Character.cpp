@@ -174,7 +174,7 @@ int Character::ProcessClassAbilities()
 	bool can_tame = max(m_pMainClass->m_bCanTame, m_pSubClass->m_bCanTame);
 
 	PC_Class::ExertionRecoveryType exertion_recovery = static_cast<PC_Class::ExertionRecoveryType>(
-		m_pMainClass->m_ExertionRecovery, m_pSubClass->m_ExertionRecovery
+		max(m_pMainClass->m_ExertionRecovery, m_pSubClass->m_ExertionRecovery)
 		);
 	PC_Class::ToleranceType alcohol_tolerance =
 		static_cast<PC_Class::ToleranceType>(max(m_pMainClass->m_AlcoholTolerance,
@@ -228,7 +228,7 @@ int Character::ProcessClassAbilities()
 
 	if (exertion_recovery > PC_Class::ExertionRecoveryType::NORMAL_REC)
 	{
-		report_strstream << "Have " << PC_Class::ExertionRecTypeToStr(exertion_recovery) << " stamina recovery out of doors";
+		report_strstream << "Have " << PC_Class::ExertionRecTypeToStr(exertion_recovery) << " stamina recovery out of doors.\r\n";
 		bHasAbility = true;
 	}
 	if (pain_tolerance > PC_Class::ToleranceType::NORMAL_TOL)
