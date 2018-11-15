@@ -26,8 +26,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 const char * Skill::SkillTypeToStr(Skill::SkillType type)
 {
-	static const char* skillnametable[8] = { "Psionic", "Combat", "Weapon",
-		"Manipulation", "Perception", "Language",
+	static const char* skillnametable[9] = { "Psionic", "Combat", "Weapon",
+		"Manipulation", "Perception", "Barter", "Language",
 		"Craft", "Stealth" };
 	return skillnametable[static_cast<int>(type)];
 }
@@ -57,6 +57,10 @@ Skill::SkillType Skill::SkillStrToType(const std::string & type)
 	else if ("Manipulation" == type)
 	{
 		return SKTYPE_MANIPULATION;
+	}
+	else if ("Barter" == type)
+	{
+		return SKTYPE_BARTER;
 	}
 	else if ("Language" == type)
 	{
