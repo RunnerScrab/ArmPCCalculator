@@ -6,7 +6,7 @@ Select guild and subguild to view skill and ability information. The effects of 
 below the skill sheet preview.
 
 ## Database
-The file `armskills.db` is a SQLite db file, which means you can view and edit it with any SQLite db file viewer,
+This program loads its data from the `armskills.db` file. `armskills.db` is a SQLite db file, which means you can view and edit it with any SQLite db file viewer,
 such as sqlitebrowser (https://sqlitebrowser.org/). You will also be able to query the db file with sql statements.
 
 For example, to list all classes who get parry:
@@ -28,6 +28,9 @@ select class_name from class_skills where skill_name = 'parry';
 ```
 
 ### Adding new skills or classes
-1) Add new skills to the `skills` table.
-1) Add new classes to the `classes` table.
-1) Assign a skill from the `skills` table to a class by creating a new record for the class in `class_skills` table.
+You can make changes to the file without having to modify the program, so long as the table structure remains the same, and as long
+as you do the following:
+ 
+1) Add any and all new skills to the `skills` table.
+1) Add any and all new classes to the `classes` table.
+1) After the above two have been done, assign a skill from the `skills` table to a class by creating a new record for the class in `class_skills` table.
