@@ -30,7 +30,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 void Character::ProcessClassSkills()
 {
-	if (!this->m_pMainClass || !this->m_pSubClass)
+	if (!this->m_pMainClass && !this->m_pSubClass)
 	{
 		return;
 	}
@@ -39,36 +39,42 @@ void Character::ProcessClassSkills()
 
 	skill_report << "[] Codes: C = City, W = Wilderness, B = Both City and Wilderness\r\nA skill in [] is what branches the marked skill.\r\n\r\n";
 
-	for (const PC_Class_Skill& sk : m_pMainClass->m_class_skill_list)
+	if (m_pMainClass)
 	{
-		if (skillset.insert(sk.m_baseSkill->m_name).second == false)
+		for (const PC_Class_Skill& sk : m_pMainClass->m_class_skill_list)
 		{
+			if (skillset.insert(sk.m_baseSkill->m_name).second == false)
+			{
+
+			}
+			else
+			{
+				m_combinedskills[sk.m_baseSkill->m_name] = sk;
+			}
 
 		}
-		else
-		{
-			m_combinedskills[sk.m_baseSkill->m_name] = sk;
-		}
-
 	}
 
+
 	std::vector<PC_Class_Skill*> overlappingskills;
-
-	for (PC_Class_Skill& sk : m_pSubClass->m_class_skill_list)
+	if (m_pSubClass)
 	{
-		if (skillset.insert(sk.m_baseSkill->m_name).second == false)
+		for (PC_Class_Skill& sk : m_pSubClass->m_class_skill_list)
 		{
-			PC_Class_Skill combskill = PC_Class_Skill::CombineSkills(&m_combinedskills[sk.m_baseSkill->m_name],
-				&sk);
-			//Subguild skill overlaps main guild skill
-			m_combinedskills[sk.m_baseSkill->m_name] = combskill;
-			overlappingskills.push_back(&m_combinedskills[sk.m_baseSkill->m_name]);
-		}
-		else
-		{
-			m_combinedskills[sk.m_baseSkill->m_name] = sk;
-		}
+			if (skillset.insert(sk.m_baseSkill->m_name).second == false)
+			{
+				PC_Class_Skill combskill = PC_Class_Skill::CombineSkills(&m_combinedskills[sk.m_baseSkill->m_name],
+					&sk);
+				//Subguild skill overlaps main guild skill
+				m_combinedskills[sk.m_baseSkill->m_name] = combskill;
+				overlappingskills.push_back(&m_combinedskills[sk.m_baseSkill->m_name]);
+			}
+			else
+			{
+				m_combinedskills[sk.m_baseSkill->m_name] = sk;
+			}
 
+		}
 	}
 	for (unsigned int i = 0; i < Skill::SkillType::NUM_SKILLS; ++i)
 	{
@@ -161,10 +167,19 @@ Character::Character(PC_Class * main, PC_Class * sub) :
 
 int Character::ProcessClassAbilities()
 {
-	if (!this->m_pMainClass || !this->m_pSubClass)
+	if (!this->m_pMainClass && !this->m_pSubClass)
 	{
 		return -1;
 	}
+
+	PC_Class emptyclass; //Temporarily create an empty class
+	memset(&emptyclass, 0, sizeof(PC_Class));
+
+	if(!m_pMainClass)
+		m_pMainClass = &emptyclass;
+	if (!m_pSubClass)
+		m_pSubClass = &emptyclass;
+
 
 	unsigned int tkp_cost = max(m_pMainClass->m_udwTKP_cost, m_pSubClass->m_udwTKP_cost);
 	unsigned int max_mounts = max(m_pMainClass->m_udwMaxMounts, m_pSubClass->m_udwMaxMounts);
@@ -190,13 +205,6 @@ int Character::ProcessClassAbilities()
 	std::ostringstream report_strstream;
 	report_strstream << "This character will cost " << tkp_cost << " temporary karma points.\r\n";
 
-	/*
-	if (environment > PC_Class::EnvironmentType::NEUTRAL)
-	{
-		report_strstream << "Any stealth, hunting, perception, or food foraging skills will be specialized for " <<
-			environment_rep_str << ".\n";
-	}
-	*/
 	bool bHasAbility = false;
 	report_strstream << "It will:\r\n";
 
@@ -249,6 +257,11 @@ int Character::ProcessClassAbilities()
 
 
 	m_AbilityReport = report_strstream.str();
+
+	if (m_pMainClass == &emptyclass)
+		m_pMainClass = nullptr;
+	if (m_pSubClass == &emptyclass)
+		m_pSubClass = nullptr;
 
 	return 0;
 }
