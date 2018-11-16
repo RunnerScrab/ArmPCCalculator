@@ -42,18 +42,12 @@ CArmSkillApp g_myapp;
 
 BOOL CArmSkillApp::InitInstance()
 {
-	INITCOMMONCONTROLSEX InitCtrls;
-	InitCtrls.dwSize = sizeof(InitCtrls);
-	// Set this to include all the common control classes you want to use
-	// in your application.
-	InitCtrls.dwICC = ICC_WIN95_CLASSES;
-	InitCommonControlsEx(&InitCtrls);
-
 	CWinApp::InitInstance();
 	AfxEnableControlContainer();
 
 	CCharSheetDlg dlg;
 	m_pMainWnd = &dlg;
+
 	INT_PTR nResponse = dlg.DoModal();
 	return FALSE;
 }

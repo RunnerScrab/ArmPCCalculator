@@ -64,6 +64,6 @@ Section "Uninstall"
 	Delete "$SMPROGRAMS\${MUI_PRODUCT}\*.*"
 	RMDir "$SMPROGRAMS\${MUI_PRODUCT}"
 	RMDir "$INSTDIR"
-	DeleteRegKey /ifempty HKCU "${RegKey}"
+	DeleteRegKey HKCU "${RegKey}"
 	DeleteRegKey HKCU "${UninstRegKey}"
 SectionEnd

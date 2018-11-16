@@ -162,6 +162,7 @@
     <ClCompile Include="CCharSheetDlg.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CArmSkillApp.cpp" />
+    <ClCompile Include="CRegistryKey.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -182,6 +183,7 @@
     <ClInclude Include="CCharSheetDlg.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CArmSkillApp.h" />
+    <ClInclude Include="CRegistryKey.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PC_Class.h" />
     <ClInclude Include="PC_Class_Skill.h" />
