@@ -26,3 +26,8 @@ select class_name from class_skills where skill_name = 'parry';
 "Protector"
 "Swordsman"
 ```
+
+### Adding new skills or classes
+1) Add new skills to the `skills` table.
+1) Add new classes to the `classes` table.
+1) Assign a skill from the `skills` table to a class by creating a new record for the class in `class_skills` table.
