@@ -127,6 +127,9 @@ BOOL CCharSheetDlg::OnInitDialog()
 	m_editfont.CreateFontIndirect(&m_lfLogFont);
 	m_pEdit->SetFont(&m_editfont);
 
+	m_pGuildCombobox->AddString(L"*NONE");
+	m_pSubguildCombobox->AddString(L"*NONE");
+
 	const auto& rClassMap = m_spSkillsDB->GetClassMap();
 	for (auto& clpair : rClassMap)
 	{
@@ -140,6 +143,9 @@ BOOL CCharSheetDlg::OnInitDialog()
 		}
 	}
 
+	m_pGuildCombobox->SetCurSel(0);
+	m_pSubguildCombobox->SetCurSel(0);
+
 	LoadWindowDims();
 
 	return TRUE;
@@ -151,11 +157,16 @@ void CCharSheetDlg::UpdateTextEdit()
 	if (CB_ERR != m_pGuildCombobox->GetCurSel())
 		m_pGuildCombobox->GetLBText(m_pGuildCombobox->GetCurSel(), guildstr);
 
-	CString subguildstr;
+	CString sguildstr;
 	if (CB_ERR != m_pSubguildCombobox->GetCurSel())
-		m_pSubguildCombobox->GetLBText(m_pSubguildCombobox->GetCurSel(), subguildstr);
+		m_pSubguildCombobox->GetLBText(m_pSubguildCombobox->GetCurSel(), sguildstr);
 
-	std::shared_ptr<Character> pChar = m_spSkillsDB->CreateCharacter(CT2A(guildstr.GetString()), CT2A(subguildstr.GetString()));
+	std::string mainguildstr(CT2A(guildstr.GetString()));
+	std::string subguildstr(CT2A(sguildstr.GetString()));
+
+	std::shared_ptr<Character> pChar = m_spSkillsDB->CreateCharacter(
+		mainguildstr != "*NONE" ? mainguildstr.c_str() : nullptr,
+		subguildstr != "*NONE" ? subguildstr.c_str() : nullptr);
 	if (pChar)
 	{
 		std::string report = pChar->GetCombinedReport();

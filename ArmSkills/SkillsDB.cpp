@@ -77,8 +77,8 @@ std::shared_ptr<Character> SkillsDB::CreateCharacter(const char * mg, const char
 		return nullptr;
 	}
 
-	unsigned int mglen = strlen(mg);
-	unsigned int sglen = strlen(sg);
+	unsigned int mglen = mg ? strlen(mg) : 0;
+	unsigned int sglen = sg ? strlen(sg) : 0;
 
 	std::shared_ptr<Character> pc_out = std::make_shared<Character>(mglen ? &m_classmap[mg] : nullptr,
 		sglen ? &m_classmap[sg] : nullptr);
