@@ -101,10 +101,23 @@ PC_Class_Skill PC_Class_Skill::CombineSkills(PC_Class_Skill * main, PC_Class_Ski
 
 	if (main->m_environment != sub->m_environment)
 	{
-		PC_Class_Skill::SkillEnvironmentType envflag =
-			static_cast<PC_Class_Skill::SkillEnvironmentType>(~(sub->m_environment ^ newskill.m_environment) & 3);
-		combeffects.emplace_back("improves " +
-			std::string(PC_Class_Skill::EnvTypeToString(envflag)) + " use");
+		union
+		{
+			struct
+			{
+				unsigned char hb : 1;
+				unsigned char lb : 1;
+			} bits;
+			PC_Class_Skill::SkillEnvironmentType env = PC_Class_Skill::SkillEnvironmentType::NONE;
+		} A, B, Q;
+
+		A.env = main->m_environment;
+		B.env = sub->m_environment;
+		Q.bits.hb = (~A.bits.hb) & B.bits.hb;
+		Q.bits.lb = (~A.bits.lb) & B.bits.lb;
+
+		PC_Class_Skill::SkillEnvironmentType envflag = Q.env;
+		combeffects.emplace_back("improves " + std::string(PC_Class_Skill::EnvTypeToString(envflag)) + " use");
 	}
 
 	if (combeffects.empty())
