@@ -28,7 +28,7 @@ select class_name from class_skills where skill_name = 'parry';
 ```
 
 ### Adding new skills or classes
-You can make changes to the file without having to modify the program, so long as the table structure remains the same, and as long
+You can make changes to the database file without having to modify the program, so long as the table structure remains the same, and as long
 as you do the following:
  
 1) Add any and all new skills to the `skills` table.
