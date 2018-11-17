@@ -34,3 +34,5 @@ as you do the following:
 1) Add any and all new skills to the `skills` table.
 1) Add any and all new classes to the `classes` table.
 1) After the above two have been done, assign a skill from the `skills` table to a class by creating a new record for the class in `class_skills` table.
+
+For now, **case must match!** (as far as code is concerned Laborer, LABORER, and laborer are three different classes).
