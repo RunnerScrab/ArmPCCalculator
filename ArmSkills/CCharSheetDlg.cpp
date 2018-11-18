@@ -192,7 +192,15 @@ void CCharSheetDlg::OnCbnSelchangeSubguildCombo()
 
 void CCharSheetDlg::OnClose()
 {
-	StoreWindowDims();
+	WINDOWPLACEMENT wndpl;
+	memset(&wndpl, 0, sizeof(WINDOWPLACEMENT));
+	wndpl.length = sizeof(WINDOWPLACEMENT);
+	this->GetWindowPlacement(&wndpl);
+	
+	if (!(wndpl.showCmd & SW_MINIMIZE))
+	{
+		StoreWindowDims();
+	}
 	CDialog::OnClose();
 }
 
@@ -222,6 +230,8 @@ int CCharSheetDlg::StoreWindowDims()
 
 	DWORD width = rc.right - rc.left;
 	DWORD height = rc.bottom - rc.top;
+	width = max(640, width);
+	height = max(480, height);
 
 	if (m_pRegKey->SetKeyDWORDValue(L"Dim", L"width", width) &&
 		m_pRegKey->SetKeyDWORDValue(L"Dim", L"height", height))
