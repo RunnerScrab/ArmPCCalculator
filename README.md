@@ -1,5 +1,6 @@
 # Arm PC Calculator
-This is a class calculator for the MUD Armageddon.
+This is a class calculator that helped plan characters for the MUD Armageddon, which was a long running roleplaying game
+that closed because of community drama.
 
 ## Usage
 Select guild and subguild to view skill and ability information. The effects of overlapping skills will be listed
